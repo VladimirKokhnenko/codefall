@@ -36,15 +36,32 @@
       </div>
     </section>
 
-    <section>
+    <section id="screenshots">
       <h2>Screenshots</h2>
-      <div class="shots">
-        <img src="screens/en/01-default.png" alt="Default look: golden city with amber rain">
-        <img src="screens/en/02-retro.png" alt="Retro terminal mode">
-        <img src="screens/en/03-city.png" alt="City mode, cyan tint">
-        <img src="screens/en/04-frame.png" alt="Photo frame mode">
-        <img src="screens/en/05-settings.png" alt="Settings window">
+      <div class="carousel" data-count="13">
+        <div class="stage">
+          <button class="nav prev" aria-label="Previous">&#10094;</button>
+          <img class="main" src="screens/01.jpg" alt="City — gold">
+          <button class="nav next" aria-label="Next">&#10095;</button>
+          <div class="caption"><span class="cap">City — gold</span><span class="counter">1 / 13</span></div>
+        </div>
+        <div class="thumbs">
+        <button class="thumb" data-i="0" aria-label="City — gold"><img src="screens/thumbs/01.jpg" alt="City — gold" loading="lazy"></button>
+        <button class="thumb" data-i="1" aria-label="City — green"><img src="screens/thumbs/02.jpg" alt="City — green" loading="lazy"></button>
+        <button class="thumb" data-i="2" aria-label="Retro terminal — amber"><img src="screens/thumbs/03.jpg" alt="Retro terminal — amber" loading="lazy"></button>
+        <button class="thumb" data-i="3" aria-label="Retro terminal — green"><img src="screens/thumbs/04.jpg" alt="Retro terminal — green" loading="lazy"></button>
+        <button class="thumb" data-i="4" aria-label="City — magenta"><img src="screens/thumbs/05.jpg" alt="City — magenta" loading="lazy"></button>
+        <button class="thumb" data-i="5" aria-label="City — purple"><img src="screens/thumbs/06.jpg" alt="City — purple" loading="lazy"></button>
+        <button class="thumb" data-i="6" aria-label="City — red"><img src="screens/thumbs/07.jpg" alt="City — red" loading="lazy"></button>
+        <button class="thumb" data-i="7" aria-label="City — blue"><img src="screens/thumbs/08.jpg" alt="City — blue" loading="lazy"></button>
+        <button class="thumb" data-i="8" aria-label="Retro terminal — white"><img src="screens/thumbs/09.jpg" alt="Retro terminal — white" loading="lazy"></button>
+        <button class="thumb" data-i="9" aria-label="City — monochrome"><img src="screens/thumbs/10.jpg" alt="City — monochrome" loading="lazy"></button>
+        <button class="thumb" data-i="10" aria-label="Photo frame"><img src="screens/thumbs/11.jpg" alt="Photo frame" loading="lazy"></button>
+        <button class="thumb" data-i="11" aria-label="Photo frame"><img src="screens/thumbs/12.jpg" alt="Photo frame" loading="lazy"></button>
+        <button class="thumb" data-i="12" aria-label="Photo frame"><img src="screens/thumbs/13.jpg" alt="Photo frame" loading="lazy"></button>
+        </div>
       </div>
+      <p class="hint">Click the picture to view it full-screen. Arrow keys switch frames.</p>
     </section>
 
     <section>
@@ -61,11 +78,43 @@
     </section>
   </main>
 
+  <div class="lightbox" hidden><img alt=""><button class="close" aria-label="Close">&#10005;</button></div>
+
   <footer>
     <div class="wrap">
       <nav><a href="privacy.html">Privacy policy</a><a href="privacy.ru.html">Политика конфиденциальности</a><a href="https://github.com/VladimirKokhnenko/codefall/issues">Support</a></nav>
       © 2026 Vankom
     </div>
   </footer>
+  <script>
+    (function () {
+      var caps = ["City — gold", "City — green", "Retro terminal — amber", "Retro terminal — green", "City — magenta", "City — purple", "City — red", "City — blue", "Retro terminal — white", "City — monochrome", "Photo frame", "Photo frame", "Photo frame"];
+      var c = document.querySelector(".carousel"), main = c.querySelector(".main"), cap = c.querySelector(".cap"),
+          counter = c.querySelector(".counter"), thumbs = Array.prototype.slice.call(c.querySelectorAll(".thumb")),
+          lb = document.querySelector(".lightbox"), lbImg = lb.querySelector("img"), i = 0;
+      function src(n) { return "screens/" + ("0" + (n + 1)).slice(-2) + ".jpg"; }
+      function show(n) {
+        i = (n + caps.length) % caps.length;
+        main.src = src(i); main.alt = caps[i]; cap.textContent = caps[i]; counter.textContent = (i + 1) + " / " + caps.length;
+        thumbs.forEach(function (t, k) { t.classList.toggle("active", k === i); });
+        thumbs[i].scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+        if (!lb.hidden) { lbImg.src = src(i); lbImg.alt = caps[i]; }
+      }
+      c.querySelector(".prev").addEventListener("click", function () { show(i - 1); });
+      c.querySelector(".next").addEventListener("click", function () { show(i + 1); });
+      thumbs.forEach(function (t) { t.addEventListener("click", function () { show(+t.dataset.i); }); });
+      main.addEventListener("click", function () { lbImg.src = src(i); lbImg.alt = caps[i]; lb.hidden = false; document.body.style.overflow = "hidden"; });
+      function closeLb() { lb.hidden = true; document.body.style.overflow = ""; }
+      lb.querySelector(".close").addEventListener("click", closeLb);
+      lb.addEventListener("click", function (e) { if (e.target === lb) closeLb(); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") show(i - 1); else if (e.key === "ArrowRight") show(i + 1); else if (e.key === "Escape") closeLb();
+      });
+      var x0 = null;
+      main.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      main.addEventListener("touchend", function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(dx < 0 ? i + 1 : i - 1); x0 = null; });
+      show(0);
+    })();
+  </script>
 </body>
 </html>
