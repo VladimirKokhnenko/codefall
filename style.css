@@ -1,0 +1,51 @@
+:root {
+  --bg: #0a0704;
+  --panel: #14100a;
+  --text: #e8dcc4;
+  --muted: #9a8c72;
+  --amber: #ffb000;
+  --amber-light: #ffe0a0;
+  --line: #2a2116;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+a { color: var(--amber); }
+a:hover { color: var(--amber-light); }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+header { padding: 56px 0 32px; border-bottom: 1px solid var(--line); }
+header .brand { display: flex; align-items: center; gap: 20px; }
+header img { width: 96px; height: 96px; border-radius: 22px; }
+header h1 { margin: 0; font-size: 40px; letter-spacing: 0.5px; }
+header p.tagline { margin: 6px 0 0; color: var(--muted); font-size: 18px; }
+.cta { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-block; padding: 12px 22px; border-radius: 8px; text-decoration: none; font-weight: 600;
+  background: var(--amber); color: #1a1000;
+}
+.btn:hover { background: var(--amber-light); color: #1a1000; }
+.btn.secondary { background: transparent; color: var(--amber); border: 1px solid var(--amber); }
+main section { padding: 40px 0; border-bottom: 1px solid var(--line); }
+h2 { font-size: 26px; margin: 0 0 16px; color: var(--amber-light); }
+h3 { font-size: 18px; margin: 20px 0 6px; }
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+.mode { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.mode h3 { margin-top: 0; color: var(--amber); }
+.mode p { margin: 0; color: var(--muted); }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.shots img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
+ul { padding-left: 22px; }
+li { margin: 4px 0; }
+footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+footer nav a { margin-right: 16px; }
+.lang { float: right; font-size: 14px; }
+article h2 { margin-top: 28px; }
+code { background: var(--panel); padding: 1px 6px; border-radius: 4px; font-size: 14px; }
+@media (max-width: 600px) {
+  header h1 { font-size: 30px; }
+  header img { width: 72px; height: 72px; }
+}
